@@ -15,6 +15,7 @@
                             <th class="border-b border-gray-300 p-2">#</th>
                             <th class="border-b border-gray-300 p-2">Name</th>
                             <th class="border-b border-gray-300 p-2">Price</th>
+                            <th class="border-b border-gray-300 p-2">Price (USD)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -23,6 +24,7 @@
                                 <td class="text-center p-2">{{ $loop->index + 1 }}</td>
                                 <td class="text-center p-2">{{ $product->name }}</td>
                                 <td class="text-center p-2">{{ $product->price }}</td>
+                                <td class="text-center p-2">{{ $product->price_usd }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -33,6 +35,7 @@
                         @endforelse
                         </tbody>
                     </table>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>
