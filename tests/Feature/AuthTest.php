@@ -9,8 +9,6 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_redirect_after_login_successfully(): void
     {
         $user = User::factory()->create();

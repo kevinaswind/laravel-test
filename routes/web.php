@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('/products', \App\Http\Controllers\ProductController::class);
+Route::middleware('auth')->group(function(){
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+    Route::middleware('is_admin')->group(function(){
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::get('/products/{product}', [ProductController::class, 'edit'])->name('products.edit');
+    });
+});
 
 require __DIR__.'/auth.php';
