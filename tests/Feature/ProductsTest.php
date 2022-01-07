@@ -145,4 +145,20 @@ class ProductsTest extends TestCase
             ->put('/products/' . $product->id, ['name' => 'test', 'price' => 1234], ['Accept' => 'Application/json'])
             ->assertStatus(422);
     }
+
+    public function test_deleted_product_no_longer_exist_in_database()
+    {
+        $this->createUser(true);
+
+        $product = Product::factory()->create();
+
+        $this->assertEquals(1, Product::count());
+
+        $this
+            ->actingAs($this->user)
+            ->delete('/products/' . $product->id)
+            ->assertStatus(200);
+
+        $this->assertEquals(0, Product::count());
+    }
 }
